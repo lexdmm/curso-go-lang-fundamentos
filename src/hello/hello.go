@@ -1,7 +1,11 @@
-package main
+package main // define principal pacote da aplicação.
 
 import "fmt"
 
 func main() {
-	fmt.Println("Hello, World!")
+	var nome string = "Lex"
+	var versao float32 = 1.1
+
+	fmt.Println("OLá Senhor", nome)
+	fmt.Println("Este programa está na versão", versao)
 }

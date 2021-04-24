@@ -17,13 +17,14 @@ func main() {
 	fmt.Scan(&comando) // &comercial define o ponteiro que vai receber o dado desta variável, não uso scanf e sim scan porque eu ja sei que é inteiro.
 	fmt.Println("O comando escolhido foi", comando, "Endereço da variável", &comando)
 
-	if comando == 1 {
+	switch comando {
+	case 1:
 		fmt.Println("Monitorando...")
-	} else if comando == 2 {
+	case 2:
 		fmt.Println("Exibindo Logs...")
-	} else if comando == 0 {
+	case 0:
 		fmt.Println("Saindo do programa...")
-	} else {
+	default:
 		fmt.Println("Não conheço este comando")
 	}
 }

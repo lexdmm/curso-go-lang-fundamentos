@@ -1,6 +1,6 @@
-# curso-go-lang-fundamentos
+# curso-golang-fundamentos
 
-## Alguns exemplos do curso que estou fazendo
+## Alguns exemplos do curso que estou fazendo de golang
 
 ### - Instalação
 

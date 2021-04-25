@@ -7,6 +7,9 @@ import (
 	"time"
 )
 
+const quantidadeMonitoramentos = 3
+const delay = 5
+
 func main() {
 
 	exibeIntroducao()
@@ -62,7 +65,7 @@ func iniciarMonitoramento() {
 
 	sites := sitesMonitoramento()
 
-	for i := 0; i < 5; i++ {
+	for i := 0; i < quantidadeMonitoramentos; i++ {
 		/*
 		* posso utilizar o range para retornar a posição e o conteúdo do array,
 		* nesse caso não me interessa a posição então digo que não vou utilizar com _
@@ -71,7 +74,7 @@ func iniciarMonitoramento() {
 		for _, site := range sites {
 			testaSitesMonitoramento(site)
 		}
-		time.Sleep(5 * time.Second)
+		time.Sleep(delay * time.Second)
 	}
 }
 

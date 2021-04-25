@@ -1,6 +1,6 @@
 # curso-golang-fundamentos
 
-## Alguns exemplos do curso que estou fazendo de golang
+## Exemplos do curso que estou fazendo de golang lá no Alura
 
 ### - Instalação
 

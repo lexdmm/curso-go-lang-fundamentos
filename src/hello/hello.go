@@ -59,10 +59,9 @@ func devolveNomeEIdade() (string, int) {
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
 
-	var sites [4]string
-	sites[0] = "https://random-status-code.herokuapp.com/"
-	sites[1] = "https://www.google.com.br"
-	sites[2] = "https://www.whatsapp.com/?lang=pt_br"
+	sites := sites()
+
+	fmt.Println("Slice de Sites tem", len(sites), "itens")
 
 	site := "https://random-status-code.herokuapp.com/" //retorna status code aleatorio
 	resp, _ := http.Get(site)
@@ -72,4 +71,18 @@ func iniciarMonitoramento() {
 	} else {
 		fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
 	}
+}
+
+func sites() []string {
+	sites := []string{
+		"https://random-status-code.herokuapp.com/",
+		"https://www.google.com.br",
+		"https://www.whatsapp.com/?lang=pt_br",
+	}
+
+	sites = append(sites, "https://stackoverflow.com/")
+
+	fmt.Println("Slice de Sites capacidade do array de", cap(sites))
+
+	return sites
 }

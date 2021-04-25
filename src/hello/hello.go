@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"time"
@@ -11,7 +12,7 @@ const quantidadeMonitoramentos = 3
 const delay = 5
 
 func main() {
-
+	lerSitesArquivo()
 	exibeIntroducao()
 
 	for {
@@ -90,11 +91,27 @@ func sitesMonitoramento() []string {
 }
 
 func testaSitesMonitoramento(site string) {
-	resp, _ := http.Get(site)
+	resp, err := http.Get(site)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro de protocolo GET:", err)
+		return
+	}
 
 	if resp.StatusCode == 200 {
 		fmt.Println("Site:", site, "foi carregado com sucesso!")
 	} else {
 		fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
 	}
+}
+
+func lerSitesArquivo() []string {
+	var sites []string
+	arquivo, err := ioutil.ReadFile("sites")
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro de leitura:", err)
+	}
+	fmt.Println(string(arquivo))
+	return sites
 }

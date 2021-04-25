@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
@@ -26,6 +27,7 @@ func main() {
 			iniciarMonitoramento()
 		case 2:
 			fmt.Println("Exibindo Logs...")
+			imprimeLog()
 		case 0:
 			fmt.Println("Saindo do programa")
 			os.Exit(0)
@@ -136,4 +138,15 @@ func gerarLog(site string, statusCode int) {
 
 	// Como formatar datas: https://golang.org/src/time/format.go
 	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + " - Erro status:" + strconv.Itoa(statusCode) + "\n")
+	arquivo.Close()
+}
+
+func imprimeLog() {
+	arquivo, err := ioutil.ReadFile("logErr")
+	if err != nil {
+		fmt.Println("Ocorreu um erro ao tentar imprimir o log:", err)
+	}
+
+	fmt.Println(string(arquivo))
+	// ioutil não precisa de Close, ele gerencia automaticamente o fechamento do arquivo.
 }

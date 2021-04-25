@@ -67,10 +67,10 @@ func iniciarMonitoramento() {
 
 	for i := 0; i < quantidadeMonitoramentos; i++ {
 		/*
-		* posso utilizar o range para retornar a posição e o conteúdo do array,
-		* nesse caso não me interessa a posição então digo que não vou utilizar com _
-		* mas se fosse utilizar posição seria "for i, site := range sites { ... }"
-		 */
+			posso utilizar o range para retornar a posição e o conteúdo do array,
+			nesse caso não me interessa a posição então digo que não vou utilizar com _
+			mas se fosse utilizar posição seria "for i, site := range sites { ... }"
+		*/
 		for _, site := range sites {
 			testaSitesMonitoramento(site)
 		}

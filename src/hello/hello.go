@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
 
 func main() {
@@ -59,11 +60,33 @@ func devolveNomeEIdade() (string, int) {
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
 
-	sites := sites()
+	sites := sitesMonitoramento()
 
-	fmt.Println("Slice de Sites tem", len(sites), "itens")
+	for i := 0; i < 5; i++ {
+		/*
+		* posso utilizar o range para retornar a posição e o conteúdo do array,
+		* nesse caso não me interessa a posição então digo que não vou utilizar com _
+		* mas se fosse utilizar posição seria "for i, site := range sites { ... }"
+		 */
+		for _, site := range sites {
+			testaSitesMonitoramento(site)
+		}
+		time.Sleep(5 * time.Second)
+	}
+}
 
-	site := "https://random-status-code.herokuapp.com/" //retorna status code aleatorio
+func sitesMonitoramento() []string {
+	sites := []string{
+		"https://random-status-code.herokuapp.com/",
+		"https://www.google.com.br",
+		"https://www.whatsapp.com/?lang=pt_br",
+		"https://stackoverflow.com/",
+	}
+
+	return sites
+}
+
+func testaSitesMonitoramento(site string) {
 	resp, _ := http.Get(site)
 
 	if resp.StatusCode == 200 {
@@ -71,18 +94,4 @@ func iniciarMonitoramento() {
 	} else {
 		fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
 	}
-}
-
-func sites() []string {
-	sites := []string{
-		"https://random-status-code.herokuapp.com/",
-		"https://www.google.com.br",
-		"https://www.whatsapp.com/?lang=pt_br",
-	}
-
-	sites = append(sites, "https://stackoverflow.com/")
-
-	fmt.Println("Slice de Sites capacidade do array de", cap(sites))
-
-	return sites
 }

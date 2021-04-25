@@ -6,12 +6,13 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
 
-const quantidadeMonitoramentos = 3
-const delay = 5
+const quantidadeMonitoramentos = 5
+const delay = 3
 
 func main() {
 	exibeIntroducao()
@@ -99,6 +100,7 @@ func testaSitesMonitoramento(site string) {
 		fmt.Println("Site:", site, "foi carregado com sucesso!")
 	} else {
 		fmt.Println("Site:", site, "está com problemas. Status Code:", resp.StatusCode)
+		gerarLog(site, resp.StatusCode)
 	}
 }
 
@@ -124,4 +126,14 @@ func lerSitesArquivo() []string {
 	arquivo.Close()
 
 	return sites
+}
+
+func gerarLog(site string, statusCode int) {
+	arquivo, err := os.OpenFile("logErr", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Println("Ocorreu um erro ao tentar escrever no log:", err)
+	}
+
+	// Como formatar datas: https://golang.org/src/time/format.go
+	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + " - Erro status:" + strconv.Itoa(statusCode) + "\n")
 }

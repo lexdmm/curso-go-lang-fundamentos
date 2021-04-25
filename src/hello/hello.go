@@ -58,6 +58,12 @@ func devolveNomeEIdade() (string, int) {
 
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
+
+	var sites [4]string
+	sites[0] = "https://random-status-code.herokuapp.com/"
+	sites[1] = "https://www.google.com.br"
+	sites[2] = "https://www.whatsapp.com/?lang=pt_br"
+
 	site := "https://random-status-code.herokuapp.com/" //retorna status code aleatorio
 	resp, _ := http.Get(site)
 

@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -12,7 +14,6 @@ const quantidadeMonitoramentos = 3
 const delay = 5
 
 func main() {
-	lerSitesArquivo()
 	exibeIntroducao()
 
 	for {
@@ -62,11 +63,13 @@ func devolveNomeEIdade() (string, int) {
 }
 
 func iniciarMonitoramento() {
-	fmt.Println("Monitorando...")
+	fmt.Println("Monitorando os sites abaixo...")
 
 	sites := sitesMonitoramento()
 
 	for i := 0; i < quantidadeMonitoramentos; i++ {
+		fmt.Println("-------------------------")
+		fmt.Println("Leitura:", i+1)
 		/*
 			posso utilizar o range para retornar a posição e o conteúdo do array,
 			nesse caso não me interessa a posição então digo que não vou utilizar com _
@@ -80,13 +83,7 @@ func iniciarMonitoramento() {
 }
 
 func sitesMonitoramento() []string {
-	sites := []string{
-		"https://random-status-code.herokuapp.com/",
-		"https://www.google.com.br",
-		"https://www.whatsapp.com/?lang=pt_br",
-		"https://stackoverflow.com/",
-	}
-
+	sites := lerSitesArquivo()
 	return sites
 }
 
@@ -107,11 +104,24 @@ func testaSitesMonitoramento(site string) {
 
 func lerSitesArquivo() []string {
 	var sites []string
-	arquivo, err := ioutil.ReadFile("sites")
+	arquivo, err := os.Open("sites")
 
 	if err != nil {
 		fmt.Println("Ocorreu um erro de leitura:", err)
 	}
-	fmt.Println(string(arquivo))
+
+	leitura := bufio.NewReader(arquivo)
+	for {
+		linha, err := leitura.ReadString('\n')
+		linha = strings.TrimSpace(linha)
+		fmt.Println(linha)
+		sites = append(sites, linha)
+
+		if err == io.EOF {
+			break
+		}
+	}
+	arquivo.Close()
+
 	return sites
 }
